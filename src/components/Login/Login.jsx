@@ -1,17 +1,34 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { useFormik } from 'formik'
 
 export const Login = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const initialValues = {
+        email: "",
+        password: "",
+    };
 
-    function handleSubmit(e){
-        e.preventDefault();
-        if (!email || !password){
-            alert("Es indispensable completar ambos inputs");
-        } else {
-            alert("Form validado");
+    const validate = values => {
+        const errors = {};
+        if(!values.email){
+            errors.email = "El email es requerido.";
         }
+        if (!values.password){
+            errors.password = "El password es requerido.";
+        }
+        return errors;
     }
+
+    const onSubmit = () => {
+        alert("Formulario validado!");
+    }
+
+    const formik = useFormik({
+        initialValues,
+        validate,
+        onSubmit
+    });
+
+    const { handleSubmit, handleChange, values, errors} = formik;
 
     return (
         <div className="App">
@@ -20,22 +37,24 @@ export const Login = () => {
             <div>
                 <label>Email</label>
                 <input 
-                    value={email} 
+                    value={values.email} 
                     name="email" 
                     type="email" 
-                    onChange={e => setEmail(e.target.value)} 
+                    onChange={handleChange} 
                 />
+                {errors.email && <p>{errors.email}</p>}
             </div>
             <div>
                 <label>Contraseña</label>
                 <input 
-                    value={password} 
+                    value={values.password} 
                     name="password" 
                     type="password" 
-                    onChange={e => setPassword(e.target.value)} 
+                    onChange={handleChange} 
                 />
+                {errors.password && <p>{errors.password}</p>}
             </div>
-            <input type="submit" />
+            <input type="submit"/>
             </form>
         </div>
     )

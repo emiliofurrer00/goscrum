@@ -28,11 +28,15 @@
 
 .App > form > div > *:not(label), input[type=submit]{
   padding: 8px 0;
-  background-color: #FF452B;
-  color: white;
   border-radius: 8px;
   border: none;
 }
+
+input[type="submit"] {
+  background-color: #FF452B;
+  color: white;
+}
+
 
 @media screen and (min-width: 600px) {
   .App > form {
