@@ -1,7 +1,7 @@
 import React from 'react'
 import { useFormik } from 'formik';
 
-export const Register = () => {
+const Register = () => {
     const initialValues = {
         username: "",
         email: "",
@@ -98,3 +98,5 @@ export const Register = () => {
         </div>
     )
 }
+
+export default Register

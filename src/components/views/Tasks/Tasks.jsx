@@ -1,1 +1,3 @@
-export const Tasks = () => <div className="App">Tasks</div>;
+const Tasks = () => <div className="App">Tasks</div>;
+
+export default Tasks;

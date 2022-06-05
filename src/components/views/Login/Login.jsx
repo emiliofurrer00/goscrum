@@ -2,7 +2,7 @@ import React from 'react'
 import { useFormik } from 'formik'
 import { useNavigate } from 'react-router-dom';
 
-export const Login = () => {
+const Login = () => {
     const navigate = useNavigate();
 
     const initialValues = {
@@ -63,3 +63,5 @@ export const Login = () => {
         </div>
     )
 }
+
+export default Login

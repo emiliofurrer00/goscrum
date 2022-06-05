@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const Error404 = () => {
+const Error404 = () => {
   return (
     <div className="App">
         <div style={{
@@ -14,3 +14,5 @@ export const Error404 = () => {
     </div>
   )
 }
+
+export default Error404
