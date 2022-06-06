@@ -49,6 +49,7 @@ const Task = ({data}) => {
 
     return (
         <div className="task">
+            <button className="delete-btn">X</button>
             <h3 className="task-title">{title}</h3>
             <h5>{date}</h5>
             <h5>{creator}</h5>

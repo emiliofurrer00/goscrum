@@ -7,6 +7,8 @@ export const StyledHeader = styled.header`
     justify-content: space-between;
     align-items: center;
     padding: 0 12px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    
     & .header-logo {
     font-size: 18px;
     &  span {
