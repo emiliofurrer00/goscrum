@@ -57,7 +57,7 @@ const App = () => {
   return (
     <AnimatePresence>
       {/* Temporary navbar for dev env */}
-      <nav style={{
+      {/* <nav style={{
         width: '100vw',
         height: 60,
         display: 'flex',
@@ -68,7 +68,7 @@ const App = () => {
         <Link to="/login">Login</Link>
         <Link to="/register">Register</Link>
         <Link to="/">Tasks</Link>
-      </nav>
+      </nav> */}
 
       <Routes location={location} key={location.pathname}>
         <Route path='/login' element={<MotionElement><Login/></MotionElement>} />

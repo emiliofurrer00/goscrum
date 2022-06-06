@@ -1,5 +1,7 @@
 import React from 'react'
 import { useFormik } from 'formik';
+import './Register.styles.css'
+import { Link } from 'react-router-dom';
 
 const Register = () => {
     const initialValues = {
@@ -34,6 +36,16 @@ const Register = () => {
                 {errors.username && <p>{errors.username}</p>}
             </div>
             <div>
+                <label>Contraseña</label>
+                <input 
+                    value={values.password} 
+                    name="password" 
+                    type="password" 
+                    onChange={handleChange} 
+                />
+                {errors.password && <p>{errors.password}</p>}
+            </div>
+            <div>
                 <label>Email</label>
                 <input 
                     value={values.email} 
@@ -44,14 +56,10 @@ const Register = () => {
                 {errors.email && <p>{errors.email}</p>}
             </div>
             <div>
-                <label>Contraseña</label>
-                <input 
-                    value={values.password} 
-                    name="password" 
-                    type="password" 
-                    onChange={handleChange} 
-                />
-                {errors.password && <p>{errors.password}</p>}
+                <label for="switch" class="toggle">
+                <input type="checkbox" id="switch" className="checkbox" />
+                    Perteneces a un equipo ya creado
+                </label>                
             </div>
             <div>
                 <label>Rol</label>
@@ -95,6 +103,7 @@ const Register = () => {
             <input type="hidden" name="teamID" value="9cdvd108-f924-4383-947d-8f0c651d0dad" /> 
             <input type="submit"/>
             </form>
+            <Link className="link" to="/login">Ir a Iniciar sesión</Link>
         </div>
     )
 }

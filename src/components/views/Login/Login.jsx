@@ -1,6 +1,7 @@
 import React from 'react'
 import { useFormik } from 'formik'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import './Login.styles.css'
 
 const Login = () => {
     const navigate = useNavigate();
@@ -37,7 +38,7 @@ const Login = () => {
     return (
         <div className="App">
             <form onSubmit={handleSubmit}>
-            <h2>Iniciar sesión</h2>
+            <h2 className="title">Iniciar sesión</h2>
             <div>
                 <label>Email</label>
                 <input 
@@ -58,7 +59,8 @@ const Login = () => {
                 />
                 {errors.password && <p>{errors.password}</p>}
             </div>
-            <input type="submit"/>
+            <input type="submit"/>            
+            <Link className="link" to="/register">Registrarme</Link>
             </form>
         </div>
     )
