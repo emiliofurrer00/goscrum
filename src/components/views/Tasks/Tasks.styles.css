@@ -1,0 +1,35 @@
+.container {
+    width: 100vw;
+    min-height: 100vh-60px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.task {
+    width: 100%;
+    background: #FFFFFF;
+    border: 1px solid #C4C4C4;
+    border-radius: 8px;
+    padding: 15px 20px;
+}
+
+.task *:not(.task-title) {
+    font-size: 10px;
+    margin: 5px 0;
+    border: none;
+}
+
+.task button {
+    border-radius: 3.6px;
+    padding: 2.4px 3.6px;
+    font-weight: 600;
+}
+
+.task-statuses {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 12px;
+}
