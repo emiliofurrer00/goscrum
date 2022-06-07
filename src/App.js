@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react';
 import Login from './components/views/Login/Login';
 import Register from './components/views/Register/Register'
-import { Link, Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import './App.css';

@@ -14,6 +14,7 @@ const StatusBtn = styled.button`
 const PriorityBtn = styled.button`
     color: white;
     background-color: ${props => {
+        // eslint-disable-next-line default-case
         switch (props.priority){
             case "high":
                 return "#FF452B";
