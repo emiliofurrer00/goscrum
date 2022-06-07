@@ -1,48 +1,22 @@
-.container {
-    width: 100vw;
+.tasks-filter-controls {
     display: flex;
-    justify-content: center;
     flex-direction: column;
-    padding: 20px;
+    font-size: 13.5px;
 }
 
-.task {
-    width: 100%;
-    background: #FFFFFF;
-    border: 1px solid #C4C4C4;
-    border-radius: 8px;
-    padding: 15px 20px;
+.tasks-filter-controls input:not(input[type="radio"]), .tasks-filter-controls select {
+    border: var(--global-border);
+    height: 38px;
+    margin: 9px 0;
+    border-radius: var(--global-border-radius);
+    border: 1px solid var(--global-background-color);
 }
 
-.task *:not(.task-title) {
-    font-size: 10px;
-    margin: 4px 0;
-    border: none;
-}
-
-.task button {
-    border-radius: 3.6px;
-    padding: 2.4px 3.6px;
-    font-weight: 600;
-}
-
-.task-statuses {
+.ownership-filter-container {
     display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 12px;
+    gap: 10px;
 }
 
-.task .task-title {
-    font-size: 14px;
-}
-
-.task .delete-btn {
-    position: absolute;
-    right: 35px;
-}
-
-h2.tasks-view-title {
-    font-size: 16px;
-    margin-bottom: 19px;
+.ownership-filter-container input {
+    margin-right: 5px;
 }
