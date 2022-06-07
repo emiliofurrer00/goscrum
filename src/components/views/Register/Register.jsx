@@ -101,9 +101,9 @@ const Register = () => {
                 {errors.continent && <p>{errors.role}</p>}
             </div>
             <input type="hidden" name="teamID" value="9cdvd108-f924-4383-947d-8f0c651d0dad" /> 
-            <input type="submit"/>
-            </form>
+            <input type="submit"/>            
             <Link className="link" to="/login">Ir a Iniciar sesión</Link>
+            </form>
         </div>
     )
 }

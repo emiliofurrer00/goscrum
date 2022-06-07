@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const TaskCard = styled.div`
     width: 100%;
+
     background: #FFFFFF;
     border: 1px solid #C4C4C4;
     border-radius: 8px;
@@ -24,10 +25,10 @@ export const TaskCard = styled.div`
     }
     & .task-title {
         font-size: 14px;
+        display: flex;
+        justify-content: space-between;
     }
     & .delete-btn {
-        position: absolute;
-        right: 35px;
     }
     & h2.tasks-view-title {
         font-size: 16px;
@@ -36,10 +37,18 @@ export const TaskCard = styled.div`
 
 export const StatusBtn = styled.button`
     background-color: ${props => {
-        return props.finished ? "#1EC876" : "#FBDE3F"
+        // eslint-disable-next-line default-case
+        switch (props.status){
+            case "new":
+                return "#FF452B";
+            case "in progress":
+                return "#007BFF";
+            case "completed":
+                return "#1EC876";
+        }
     }};
     color: ${props => {
-        return props.finished ? "white" : "black";
+        return props.status === "new" ? "white" : "black";
     }};
 `
 
