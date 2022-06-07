@@ -63,7 +63,7 @@ const Register = () => {
             </div>
             <div>
                 <label>Rol</label>
-                <select 
+                <select className="select-role"
                     value={values.role} 
                     name="rol" 
                     onChange={handleChange} 

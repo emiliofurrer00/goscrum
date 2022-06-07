@@ -1,23 +1,31 @@
 import React from 'react'
 import { StyledHeader } from './Header.styles'
+import { useNavigate } from 'react-router-dom';
 
-function Header() {
-  return (
-    <StyledHeader>
-        <h1 className="header-logo">
-            <span>
-                Go
-            </span>
-            Scrum
-        </h1>
-        <div className="right-section">
-            <button className='donate-btn'>Donar</button>
-            <h4>Tareas creadas: 2</h4>
-            <h4>Usuario</h4>
-            <button className='logout-btn'>X</button>
-        </div>
-    </StyledHeader>
-  )
+function Header({tasksNumber = 0}) {
+    const navigate = useNavigate();
+    
+    function handleLogout() {
+        localStorage.removeItem('logged');
+        navigate('/login', {replace: true});
+    }
+
+    return (
+        <StyledHeader>
+            <h1 className="header-logo">
+                <span>
+                    Go
+                </span>
+                Scrum
+            </h1>
+            <div className="right-section">
+                <button className='donate-btn'>Donar</button>
+                <h4>Tareas creadas: {tasksNumber}</h4>
+                <h4>Usuario</h4>
+                <button onClick={handleLogout} className='logout-btn'>X</button>
+            </div>
+        </StyledHeader>
+    )
 }
 
 export default Header

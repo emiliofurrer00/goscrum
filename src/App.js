@@ -90,7 +90,6 @@ const App = () => {
         />
       </Routes>      
     </AnimatePresence>
-
   );
 }
 

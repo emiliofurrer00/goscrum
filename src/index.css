@@ -1,6 +1,8 @@
 :root {
   --global-primary-color: #FF452B;
   --global-background-color: #E5E5E5;
+  --global-border: 1px solid #E5E5E5;
+  --global-border-radius: 8px;
 }
 
 body {

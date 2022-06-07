@@ -1,85 +1,41 @@
 import './Tasks.styles.css';
-import styled from 'styled-components';
+import { Container } from './Tasks.styles';
 import Header from '../../Header/Header';
+import mockData from './mockData';
+import { useResize } from '../../hooks/useResize';
+import TaskCard from '../../TaskCard/TaskCard';
 
-const StatusBtn = styled.button`
-    background-color: ${props => {
-        return props.finished ? "#1EC876" : "#FBDE3F"
-    }};
-    color: ${props => {
-        return props.finished ? "white" : "black";
-    }};
-`
-
-const PriorityBtn = styled.button`
-    color: white;
-    background-color: ${props => {
-        // eslint-disable-next-line default-case
-        switch (props.priority){
-            case "high":
-                return "#FF452B";
-            case "medium":
-                return "orange";
-            case "low":
-                return "#007BFF";
-        }
-    }};
-`
-
+//Tasks VIEW component. Should modularize tasks-list into a separate component.
 const Tasks = () => {
+    const isMobile = useResize();
     return (
         <>
-            <Header />
-            <div className="container">
+            <Header tasksNumber={mockData.length}/>
+            <Container>            
+                <div className="tasks-filter-controls">
+                    <div className="ownership-filter-container">
+                        <label for="all-tasks-filter">
+                            <input type="radio" id="all-tasks-filter" name="drone" value="todas" checked/>
+                            Todas
+                        </label>
+                        <label for="my-tasks-filter">
+                            <input type="radio" id="my-tasks-filter" name="drone" value="propias"/>
+                            Mis Tareas
+                        </label>
+                    </div>
+                    <input placeholder="Seleccionar por título..."/>
+                    <select placeholder="Seleccionar por prioridad...">
+                        <option>Alta</option>
+                        <option>Media</option>
+                        <option>Baja</option>
+                    </select>
+                </div>
                 <h2 className="tasks-view-title">Mis tareas</h2>
-                {mockData.map(task => <Task data={task} key={task.date}></Task>)}
-            </div>
+                {mockData.map(task => <TaskCard data={task} key={task.date}></TaskCard>)}
+                <p>{isMobile ? ' mobile' : ' desktop'}</p>
+            </Container>
         </>    
     )
 };
-
-const Task = ({data}) => {
-    const {
-        title,
-        date,
-        creator,
-        finished,
-        priority,
-        description = ""
-    } = data;
-
-    return (
-        <div className="task">
-            <button className="delete-btn">X</button>
-            <h3 className="task-title">{title}</h3>
-            <h5>{date}</h5>
-            <h5>{creator}</h5>
-            <div className="task-statuses">
-                <StatusBtn finished={finished}>{finished ? "finished" : "in progress"}</StatusBtn>
-                <PriorityBtn priority={priority}>{priority}</PriorityBtn>
-            </div>
-            <p>{description}</p>
-        </div>
-    )
-}
-
-const mockData = [
-    {
-        title: "Radiohead",
-        date: "6/6/2022, 08:53",
-        creator: "emiliof",
-        finished: false,
-        priority: "high",
-        description: "Jigsaw Falling Into Place"
-    },
-    {
-        title: "Gustavo Cerati",
-        date: "6/6/2022, 08:55",
-        creator: "emiliof",
-        finished: true,
-        priority: "low",
-        description: "Bocanada >>> Resto de álbumes"
-    }
-];
 
 export default Tasks;
