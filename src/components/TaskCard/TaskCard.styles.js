@@ -2,7 +2,10 @@ import styled from 'styled-components';
 
 export const TaskCard = styled.div`
     width: 100%;
-    word-break: normal;
+    @media (min-width: 900px){
+        max-width: 300px;
+    }
+    word-break: break-all;
     overflow: hidden;
     background: #FFFFFF;
     border: 1px solid #C4C4C4;

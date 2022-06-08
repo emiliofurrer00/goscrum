@@ -15,8 +15,7 @@ const TaskCard = ({data}) => {
     const { userName } = user;
 
     return (
-        <TaskCardContainer>
-            
+        <TaskCardContainer> 
             <h3 className="task-title">{title}<button className="delete-btn">X</button></h3>
             <h5>{dateString}</h5>
             <h5>{userName}</h5>

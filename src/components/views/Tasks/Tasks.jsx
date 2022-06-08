@@ -74,7 +74,7 @@ const DesktopLayout = ({tasks}) => {
         <div style={{
             display: 'flex',
             flexDirection: 'row',
-            justifyContent: 'space-between',
+    
         }}>
             <div style={{
                 display: 'flex',
