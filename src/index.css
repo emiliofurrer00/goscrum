@@ -5,6 +5,15 @@
   --global-border-radius: 8px;
 }
 
+input:not(input[type="radio"]), select, textarea {
+  border: var(--global-border);
+  border-radius: var(--global-border-radius);
+}
+
+input:not(input[type="radio"]), select {
+  height: 40px;
+}
+
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased;

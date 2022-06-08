@@ -25,7 +25,7 @@ const mockData = [
     },
     {
         title: "Jacob Collier",
-        date: "7/6/2022, 9:48",
+        date: "7/6/2022, 9:46",
         creator: "emiliof",
         status: "in progress",
         priority: "low",
