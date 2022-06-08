@@ -16,6 +16,7 @@ export const Container = styled.div`
     }
 `
 export const TasksSection = styled.section`
+    width: 100%;
     @media (min-width: 900px) {
         width: 70%;
     }

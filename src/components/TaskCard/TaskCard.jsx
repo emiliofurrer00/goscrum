@@ -4,22 +4,25 @@ import { TaskCard as TaskCardContainer, StatusBtn, PriorityBtn } from './TaskCar
 const TaskCard = ({data}) => {
     const {
         title,
-        date,
-        creator,
+        createdAt,
+        user,
         status,
-        priority,
+        importance,
         description = ""
     } = data;
+
+    const dateString = new Date(createdAt).toLocaleString();
+    const { userName } = user;
 
     return (
         <TaskCardContainer>
             
             <h3 className="task-title">{title}<button className="delete-btn">X</button></h3>
-            <h5>{date}</h5>
-            <h5>{creator}</h5>
+            <h5>{dateString}</h5>
+            <h5>{userName}</h5>
             <div className="task-statuses">
                 <StatusBtn status={status}>{status}</StatusBtn>
-                <PriorityBtn priority={priority}>{priority}</PriorityBtn>
+                <PriorityBtn priority={importance}>{importance}</PriorityBtn>
             </div>
             <p>{description}</p>
         </TaskCardContainer>
