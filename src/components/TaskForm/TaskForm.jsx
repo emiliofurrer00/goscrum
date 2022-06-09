@@ -2,17 +2,19 @@ import React, {useState} from 'react'
 import { ErrorText, Input, Select, StyledForm } from './TaskForm.styles'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { createTask } from '../../api/requests';
 
 function TaskForm() {
     const initialValues = {
         title: "",
         status: "",
-        priority: "",
+        importance: "",
         description: ""
     }
 
-    const onSubmit = () => {
-        alert("submitted")
+    const onSubmit = (values) => {
+        console.log(values);
+        createTask(values);
     }
 
     const requiredError = "Campo obligatorio"
@@ -21,8 +23,8 @@ function TaskForm() {
         Yup.object().shape({
             title: Yup.string().min(6, "La cantidad mínima de caracteres es 6").required(requiredError),
             status: Yup.string().required(requiredError),
-            priority: Yup.string().required(requiredError),
-            description: Yup.string()
+            importance: Yup.string().required(requiredError),
+            description: Yup.string().required(requiredError)
         })
 
     const formik = useFormik({
@@ -42,19 +44,19 @@ function TaskForm() {
                     {errors.title && <ErrorText>{errors.title}</ErrorText>}
                     <Select name="status" onChange={handleChange} error={errors.status !== undefined}>
                         <option value="">Seleccionar estado</option>
-                        <option value="new">Nuevo</option>
-                        <option value="inProcess">En proceso</option>
-                        <option value="finished">Finalizado</option>
+                        <option value="NEW">Nuevo</option>
+                        <option value="IN PROGRESS">En proceso</option>
+                        <option value="FINISHED">Finalizado</option>
                     </Select>
                     {errors.status && <ErrorText>{errors.status}</ErrorText>}
-                    <Select name="priority" onChange={handleChange} error={errors.priority !== undefined}>
-                        <option>Seleccionar prioridad</option>
-                        <option value="low">Probando</option>
-                        <option value="medium">Probando</option>
-                        <option value="high">Probando</option>
+                    <Select name="importance" onChange={handleChange} error={errors.importance !== undefined}>
+                        <option value="">Seleccionar prioridad</option>
+                        <option value="LOW">Baja</option>
+                        <option value="MEDIUM">Mediana</option>
+                        <option value="HIGH">Alta</option>
                     </Select>
                     {errors.priority && <ErrorText>{errors.priority}</ErrorText>}
-                    <textarea placeholder="Descripción (opcional)" onChange={handleChange}/>
+                    <textarea name="description" placeholder="Descripción" onChange={handleChange}/>
                     <button type="submit">Crear</button>
             </StyledForm>
         </section>

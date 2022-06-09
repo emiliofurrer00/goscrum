@@ -74,7 +74,6 @@ const DesktopLayout = ({tasks}) => {
         <div style={{
             display: 'flex',
             flexDirection: 'row',
-    
         }}>
             <div style={{
                 display: 'flex',
