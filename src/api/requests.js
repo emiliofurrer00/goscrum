@@ -1,3 +1,5 @@
+import { getToken } from "./util";
+
 export function createTask({title, status, priority, description}){
     const token = localStorage.getItem("token");
     fetch('https://goscrum-api.alkemy.org/task', {
@@ -19,4 +21,17 @@ export function createTask({title, status, priority, description}){
         .then(parsedJson => {
             console.log(parsedJson);
     })
+}
+
+export async function fetchAllTasks(){
+    const token = getToken();
+    const response = await fetch('https://goscrum-api.alkemy.org/task', {
+        method: 'GET',
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `bearer ${token}`
+        },
+    })
+    const parsedResponse = await response.json();
+    return parsedResponse;
 }

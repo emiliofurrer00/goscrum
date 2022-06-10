@@ -10,26 +10,21 @@ import { useResize } from '../../hooks/useResize';
 import mockData from './mockData';
 
 import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getAllTasks, saveTasks } from '../../../store/tasksSlice';
+import { fetchAllTasks } from '../../../api/requests';
 
 //Tasks VIEW component. Should modularize tasks-list into a separate component.
 const Tasks = () => {
-    const [tasks, setTasks] = useState(null);
+    //const [tasks, setTasks] = useState(null);
     //const [username, setUsername] = useState("");
+    //>>>TRYING AND TESTING REDUX
+    const tasks = useSelector((state) => state.tasks.allTasks)
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        const token = localStorage.getItem("token");
-        fetch('https://goscrum-api.alkemy.org/task', {
-            method: 'GET',
-            headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `bearer ${token}`
-            },
-        })
-            .then(response => response.json())
-            .then(parsedJson => {
-                setTasks(parsedJson.result);
-            })
-        }, [])
+        fetchAllTasks().then(resultados => dispatch(saveTasks(resultados)))
+    }, [])
 
     useEffect(() => {
         console.log(tasks)
