@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchAllTasks } from '../api/requests';
+import { fetchAllTasks, removeTaskById } from '../api/requests';
 
 const initialState = {
     allTasks: []
@@ -17,11 +17,17 @@ export const tasksSlice = createSlice({
         },
         saveTasks: (state, action) => {
             state.allTasks = action.payload.result;
+        },
+        deleteTask: async(state, action) => {
+            const { id } = action.payload;
+            const response = await removeTaskById(id);
+            console.log(`Deleted task with id ${id}`);
+            console.log(response);
         }
     }
 });
 
-export const { getAllTasks, saveTasks } = tasksSlice.actions;
+export const { getAllTasks, saveTasks, deleteTask } = tasksSlice.actions;
 export default tasksSlice.reducer
 
 

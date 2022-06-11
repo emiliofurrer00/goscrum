@@ -7,23 +7,31 @@ import TaskForm from '../../TaskForm/TaskForm';
 import TaskCard from '../../TaskCard/TaskCard';
 
 import { useResize } from '../../hooks/useResize';
-import mockData from './mockData';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllTasks, saveTasks } from '../../../store/tasksSlice';
+import { saveTasks } from '../../../store/tasksSlice';
 import { fetchAllTasks } from '../../../api/requests';
+import { useNavigate } from 'react-router-dom';
 
 //Tasks VIEW component. Should modularize tasks-list into a separate component.
 const Tasks = () => {
     //const [tasks, setTasks] = useState(null);
     //const [username, setUsername] = useState("");
+
     //>>>TRYING AND TESTING REDUX
     const tasks = useSelector((state) => state.tasks.allTasks)
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
-        fetchAllTasks().then(resultados => dispatch(saveTasks(resultados)))
+        fetchAllTasks()
+            .then(resultados => dispatch(saveTasks(resultados)))
+            .catch(e => {
+                console.log("Se presentó el siguiente problema: ");
+                console.log(e);
+                navigate('/login');
+            })
     }, [])
 
     useEffect(() => {
@@ -31,9 +39,10 @@ const Tasks = () => {
     }, [tasks]);
 
     const isMobile = useResize();
+
     return (
         <>
-            <Header tasksNumber={mockData.length}/>
+            <Header tasksNumber={tasks.length || 0}/>
             <Container>            
                 <TaskForm />
                 <TasksSection>
@@ -56,7 +65,7 @@ const Tasks = () => {
                             <option>Baja</option>
                         </select>
                     </div>
-                    {isMobile ? <MobileLayout tasks={tasks || []}/> : <DesktopLayout tasks={tasks || []}/>}                
+                    {isMobile ? <MobileLayout tasks={tasks}/> : <DesktopLayout tasks={tasks}/>}                
                 </TasksSection>                     
             </Container>
         </>    

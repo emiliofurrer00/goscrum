@@ -35,3 +35,16 @@ export async function fetchAllTasks(){
     const parsedResponse = await response.json();
     return parsedResponse;
 }
+
+export async function removeTaskById(id){
+    const token = getToken();
+    const response = await fetch(`https://goscrum-api.alkemy.org/task/${id}`, {
+        method: 'DELETE',
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `bearer ${token}`
+        },
+    })
+    const parsedResponse = await response.json();
+    return parsedResponse
+}
