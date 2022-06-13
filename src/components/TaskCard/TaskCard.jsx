@@ -2,7 +2,7 @@ import React from 'react'
 import { fetchAllTasks, removeTaskById } from '../../api/requests';
 import { TaskCard as TaskCardContainer, StatusBtn, PriorityBtn } from './TaskCard.styles';
 import { useDispatch } from 'react-redux';
-import { deleteTask, getAllTasks, saveTasks } from '../../store/tasksSlice'
+import { saveTasks } from '../../store/tasksSlice'
 
 const TaskCard = ({data}) => {
     const {

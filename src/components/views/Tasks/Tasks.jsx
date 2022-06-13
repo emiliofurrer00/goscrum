@@ -27,12 +27,10 @@ const Tasks = () => {
             })
     }, [])
     
-    //>>>TRYING AND TESTING REDUX
+    //>>>TRYING SOME STUFF AND TESTING REDUX
     const tasks = useSelector((state) => state.tasks.allTasks)
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const isMobile = useResize();
-
 
 
     useEffect(() => {
@@ -90,7 +88,7 @@ const DesktopLayout = ({tasks}) => {
                 borderRadius: 8
             }}>
                 <h4>Nuevas</h4>
-                {tasks.filter(task => task.status === 'NEW').map(task => <TaskCard data={task} key={task.date}></TaskCard>)}
+                {tasks.filter(task => task.status === 'NEW').map(task => <TaskCard data={task} key={task.createdAt}></TaskCard>)}
             </div>
             <div style={{
                 display: 'flex',
@@ -100,7 +98,7 @@ const DesktopLayout = ({tasks}) => {
                 borderRadius: 8
             }}>
                 <h4>En progreso</h4>
-                {tasks.filter(task => task.status === 'IN PROGRESS').map(task => <TaskCard data={task} key={task.date}></TaskCard>)}
+                {tasks.filter(task => task.status === 'IN PROGRESS').map(task => <TaskCard data={task} key={task.createdAt}></TaskCard>)}
             </div>            
             <div style={{
                 display: 'flex',

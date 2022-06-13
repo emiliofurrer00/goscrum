@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchAllTasks, removeTaskById } from '../api/requests';
+import { fetchAllTasks } from '../api/requests';
 
 const initialState = {
     allTasks: []
