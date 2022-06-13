@@ -2,7 +2,11 @@ import styled from 'styled-components';
 
 export const TaskCard = styled.div`
     width: 100%;
-
+    @media (min-width: 900px){
+        max-width: 300px;
+    }
+    word-break: break-all;
+    overflow: hidden;
     background: #FFFFFF;
     border: 1px solid #C4C4C4;
     border-radius: 8px;
@@ -39,16 +43,16 @@ export const StatusBtn = styled.button`
     background-color: ${props => {
         // eslint-disable-next-line default-case
         switch (props.status){
-            case "new":
+            case "NEW":
                 return "#FF452B";
-            case "in progress":
+            case "IN PROGRESS":
                 return "#007BFF";
-            case "completed":
+            case "FINISHED":
                 return "#1EC876";
         }
     }};
     color: ${props => {
-        return props.status === "new" ? "white" : "black";
+        return props.status === "NEW" ? "white" : "black";
     }};
 `
 
@@ -56,11 +60,11 @@ export const PriorityBtn = styled.button`
     color: white;
     background-color: ${props => {
         switch (props.priority){
-            case "high":
+            case "HIGH":
                 return "#FF452B";
-            case "medium":
+            case "MEDIUM":
                 return "orange";
-            case "low":
+            case "LOW":
                 return "#007BFF";
             default:
                 return "#FF452B"

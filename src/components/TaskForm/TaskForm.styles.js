@@ -13,3 +13,14 @@ export const StyledForm = styled.form`
         resize: none;
     }
 `
+export const Input = styled.input`
+    ${props => props.error ? "border-color: #f47260 !important;" : ""}
+`
+export const Select = styled.select`
+    ${props => props.error ? "border-color: #f47260 !important;" : ""}
+`
+
+export const ErrorText = styled.span`
+    color: #f47260;
+    font-size: 14px;
+`

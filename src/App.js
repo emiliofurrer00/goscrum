@@ -44,7 +44,7 @@ const MotionElement = ({children}) => {
       className='page' 
       initial="initial" 
       animate="in" 
-      exit="out" 
+      exit="out"
       variants={pageTransitions}
     >
       {children}
