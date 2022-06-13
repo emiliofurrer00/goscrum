@@ -18,31 +18,34 @@ import { useNavigate } from 'react-router-dom';
 const Tasks = () => {
     //const [tasks, setTasks] = useState(null);
     //const [username, setUsername] = useState("");
-
-    //>>>TRYING AND TESTING REDUX
-    const tasks = useSelector((state) => state.tasks.allTasks)
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-
     useEffect(() => {
         fetchAllTasks()
             .then(resultados => dispatch(saveTasks(resultados)))
             .catch(e => {
                 console.log("Se presentó el siguiente problema: ");
                 console.log(e);
-                navigate('/login');
             })
     }, [])
+    
+    //>>>TRYING AND TESTING REDUX
+    const tasks = useSelector((state) => state.tasks.allTasks)
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const isMobile = useResize();
+
+
 
     useEffect(() => {
         console.log(tasks)
     }, [tasks]);
 
-    const isMobile = useResize();
+    if (!tasks){
+        return <h2>Loading...</h2>
+    }
 
     return (
         <>
-            <Header tasksNumber={tasks.length || 0}/>
+            <Header tasksNumber={tasks?.length || 0}/>
             <Container>            
                 <TaskForm />
                 <TasksSection>

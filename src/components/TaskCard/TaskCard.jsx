@@ -1,8 +1,8 @@
 import React from 'react'
-import { removeTaskById } from '../../api/requests';
+import { fetchAllTasks, removeTaskById } from '../../api/requests';
 import { TaskCard as TaskCardContainer, StatusBtn, PriorityBtn } from './TaskCard.styles';
 import { useDispatch } from 'react-redux';
-import { deleteTask, getAllTasks } from '../../store/tasksSlice'
+import { deleteTask, getAllTasks, saveTasks } from '../../store/tasksSlice'
 
 const TaskCard = ({data}) => {
     const {
@@ -20,9 +20,9 @@ const TaskCard = ({data}) => {
     const dateString = new Date(createdAt).toLocaleString();
     const { userName } = user;
 
-    function handleRemoveTask(){
-        dispatch(deleteTask({id: _id}));
-        dispatch(getAllTasks());
+    async function handleRemoveTask(){
+        await removeTaskById(_id);
+        fetchAllTasks().then(resultados => dispatch(saveTasks(resultados)))
     }
 
     return (

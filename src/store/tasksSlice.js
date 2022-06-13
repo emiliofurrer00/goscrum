@@ -16,14 +16,17 @@ export const tasksSlice = createSlice({
             state.allTasks = response.result;
         },
         saveTasks: (state, action) => {
-            state.allTasks = action.payload.result;
+            const { result } = action.payload;
+            console.log(`saveTasks payload:`);
+            console.log(result);
+            state.allTasks = result;
         },
-        deleteTask: async(state, action) => {
-            const { id } = action.payload;
-            const response = await removeTaskById(id);
-            console.log(`Deleted task with id ${id}`);
-            console.log(response);
-        }
+        // deleteTask: async(state, action) => {
+        //     const { id } = action.payload;
+        //     const response = await removeTaskById(id);
+        //     console.log(`Deleted task with id ${id}`);
+        //     console.log(response);
+        // }
     }
 });
 

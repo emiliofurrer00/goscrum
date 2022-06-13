@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyledHeader } from './Header.styles'
 import { useNavigate } from 'react-router-dom';
+import { DonateBtn } from './Header.styles';
 
 function Header({tasksNumber = 0}) {
     const navigate = useNavigate();
@@ -19,7 +20,7 @@ function Header({tasksNumber = 0}) {
                 Scrum
             </h1>
             <div className="right-section">
-                <button className='donate-btn'>Donar</button>
+                <DonateBtn>Donar</DonateBtn>
                 <h4>Tareas creadas: {tasksNumber}</h4>
                 <h4>Usuario</h4>
                 <button onClick={handleLogout} className='logout-btn'>X</button>
