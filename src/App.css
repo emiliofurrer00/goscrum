@@ -45,6 +45,7 @@ input[type="submit"] {
   color: white;
   border-radius: var(--global-border-radius);
   border: none;
+  cursor: pointer;
 }
 
 .link {

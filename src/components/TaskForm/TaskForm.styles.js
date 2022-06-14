@@ -25,6 +25,8 @@ export const StyledForm = styled.form`
         }
     }
 `
+
+//These two are used in several views. Should be relocated to a common components folder.
 export const Input = styled.input`
     ${props => props.error ? "border-color: #f47260 !important;" : ""}
 `

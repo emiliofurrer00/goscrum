@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik';
-import './Register.styles.css'
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 //import { getAuthData } from '../../../api/requests';
 
 const Register = () => {
     const [data, setData] = useState();
+    const [isSwitched, setIsSwitched] = useState(false);
 
     useEffect(() => {
         fetch('https://goscrum-api.alkemy.org/auth/data')
@@ -19,7 +19,7 @@ const Register = () => {
         email: "",
         password: "",
         role: "",
-        //teamID: "",
+        teamID: "",
         continent: "",
         region: "",
     };
@@ -35,12 +35,12 @@ const Register = () => {
                 .required(required),
             email: Yup.string()
                 .required(required),
-            //teamID: Yup.string().required(required),
+            teamID: Yup.string().required(required),
             continent: Yup.string()
                 .required(required),
             region: Yup.string()
                 .required(required)
-        })
+    })
 
     const onSubmit = () => {
         alert("Formulario validado!");
@@ -95,10 +95,21 @@ const Register = () => {
             </div>
             <div>
                 <label htmlFor="switch" className="toggle">
-                <input type="checkbox" id="switch" className="checkbox" />
+                <input type="checkbox" id="switch" className="checkbox" onChange={(e) => setIsSwitched(e.target.checked)}/>
                     Perteneces a un equipo ya creado
                 </label>                
             </div>
+            {isSwitched && (            
+                <div>
+                    <label>Por favor, introduce el identificador de equipo</label>
+                    <input
+                        type="text"
+                        name="teamID"
+                        value={values.teamID}
+                        onChange={handleChange}
+                    />
+                </div>                
+            )}
             <div>
                 <label>Rol</label>
                 <select className="select-role"

@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { useFormik } from 'formik'
 import { Link, useNavigate } from 'react-router-dom';
-import './Login.styles.css'
+import { ErrorText, Input } from '../../TaskForm/TaskForm.styles';
+import { Title } from './Login.styles';
+import * as Yup from 'yup';
 
 async function handleLogin(userName, password){
     try {
@@ -26,27 +28,27 @@ const Login = () => {
     const navigate = useNavigate();
 
     const initialValues = {
-        username: "",
+        userName: "",
         password: "",
     };
 
-    const validate = values => {
-        const errors = {};
-        if(!values.username){
-            errors.username = "El nombre de usuario es requerido.";
-        }
-        if (!values.password){
-            errors.password = "El password es requerido.";
-        }
-        return errors;
-    }
+    const required = "Campo obligatorio";
+
+    const validationSchema = () => 
+        Yup.object().shape({
+            userName: Yup.string()
+                .min(4, "La cantidad mínima de caracteres es 4")
+                .required(required),
+            password: Yup.string()
+                .required(required),
+    })
 
     const [loginError, setLoginError] = useState("");
 
     const onSubmit = async (values, actions) => {
-        const {username, password} = values;
+        const {userName, password} = values;
         //console.log(values);
-        const response = await handleLogin(username, password);
+        const response = await handleLogin(userName, password);
         //console.log(response)
         if (response.status_code === 200) {
             console.log(response)
@@ -63,35 +65,39 @@ const Login = () => {
 
     const formik = useFormik({
         initialValues,
-        validate,
+        validationSchema,
         onSubmit
     });
 
-    const { handleSubmit, handleChange, values, errors} = formik;
+    const { handleSubmit, handleChange, handleBlur, values, errors, touched } = formik;
 
     return (
         <div className="App">
             <form onSubmit={handleSubmit}>
-            <h2 className="title">Iniciar sesión</h2>
+            <Title>Iniciar sesión</Title>
             <div>
                 <label>Nombre de usuario</label>
-                <input 
-                    value={values.username} 
-                    name="username" 
+                <Input 
+                    value={values.userName} 
+                    name="userName" 
                     type="text" 
-                    onChange={handleChange} 
+                    onChange={handleChange}
+                    error={errors.userName}
+                    onBlur={handleBlur} 
                 />
-                {errors.username && <p>{errors.username}</p>}
+                {touched.userName && errors.userName && <ErrorText>{errors.userName}</ErrorText>}
             </div>
             <div>
                 <label>Contraseña</label>
-                <input 
+                <Input 
                     value={values.password} 
                     name="password" 
-                    type="password" 
-                    onChange={handleChange} 
+                    type="password"
+                    onChange={handleChange}
+                    onBlur={handleBlur} 
+                    error={errors.password} 
                 />
-                {errors.password && <p>{errors.password}</p>}
+                {touched.password && errors.password && <ErrorText>{errors.password}</ErrorText>}
             </div>
             <input type="submit"/>
             {loginError && <p style={{color: 'red'}}>{loginError}</p>}            
