@@ -49,7 +49,8 @@ const Login = () => {
         const response = await handleLogin(username, password);
         //console.log(response)
         if (response.status_code === 200) {
-            localStorage.setItem("username", response.userName);
+            console.log(response)
+            localStorage.setItem("username", response.result.user.userName);
             localStorage.setItem("logged", "yes");
             localStorage.setItem("token", response.result.token);
             navigate('/', {replace: true});

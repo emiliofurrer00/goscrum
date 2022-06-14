@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik';
 import './Register.styles.css'
 import { Link } from 'react-router-dom';
+import * as Yup from 'yup';
 //import { getAuthData } from '../../../api/requests';
 
 const Register = () => {
@@ -14,21 +15,45 @@ const Register = () => {
     }, [])
 
     const initialValues = {
-        username: "",
+        userName: "",
         email: "",
         password: "",
+        role: "",
+        //teamID: "",
+        continent: "",
+        region: "",
     };
+
+    const required = "Campo obligatorio";
+
+    const validationSchema = () => 
+        Yup.object().shape({
+            userName: Yup.string()
+                .min(4, "La cantidad mínima de caracteres es 4")
+                .required(required),
+            password: Yup.string()
+                .required(required),
+            email: Yup.string()
+                .required(required),
+            //teamID: Yup.string().required(required),
+            continent: Yup.string()
+                .required(required),
+            region: Yup.string()
+                .required(required)
+        })
 
     const onSubmit = () => {
         alert("Formulario validado!");
+        console.log(values)
     }
 
     const formik = useFormik({
         initialValues,
+        validationSchema,
         onSubmit
     });
 
-    const { handleSubmit, handleChange, values, errors} = formik;
+    const { handleSubmit, handleChange, values, errors, touched, handleBlur } = formik;
 
     return (
         <div className="App">                
@@ -38,12 +63,13 @@ const Register = () => {
             <div>
                 <label>Nombre de usuario</label>
                 <input 
-                    value={values.username} 
-                    name="username" 
+                    value={values.userName} 
+                    name="userName" 
                     type="text" 
                     onChange={handleChange} 
+                    onBlur={handleBlur}
                 />
-                {errors.username && <p>{errors.username}</p>}
+                {touched.userName && errors.userName && <p>{errors.userName}</p>}
             </div>
             <div>
                 <label>Contraseña</label>
@@ -52,8 +78,9 @@ const Register = () => {
                     name="password" 
                     type="password" 
                     onChange={handleChange} 
+                    onBlur={handleBlur}
                 />
-                {errors.password && <p>{errors.password}</p>}
+                {touched.password && errors.password && <p>{errors.password}</p>}
             </div>
             <div>
                 <label>Email</label>
@@ -62,8 +89,9 @@ const Register = () => {
                     name="email" 
                     type="email" 
                     onChange={handleChange} 
+                    onBlur={handleBlur}
                 />
-                {errors.email && <p>{errors.email}</p>}
+                {touched.email && errors.email && <p>{errors.email}</p>}
             </div>
             <div>
                 <label htmlFor="switch" className="toggle">
@@ -75,41 +103,57 @@ const Register = () => {
                 <label>Rol</label>
                 <select className="select-role"
                     value={values.role} 
-                    name="rol" 
+                    name="role" 
                     onChange={handleChange} 
+                    onBlur={handleBlur}
                 >
-                    <option value="Team Member">Team Member</option>
-                    <option value="Team Leader">Team Leader</option>
+                    <option value="">Seleccionar rol...</option>
+                    {data?.Rol?.map(role => (
+                        <option value={role} key={role}>{role}</option>
+                    ))}
+                    {/* <option value="Team Member">Team Member</option>
+                    <option value="Team Leader">Team Leader</option> */}
                 </select>
-                {errors.role && <p>{errors.role}</p>}
+                {touched.role && errors.role && <p>{errors.role}</p>}
             </div>
             <div>
                 <label>Continente</label>
                 <select 
                     value={values.continent} 
                     name="continent" 
-                    onChange={handleChange} 
-                >
-                    <option value="America">America</option>
-                    <option value="Europa">Europa</option>
-                    <option value="Otro">Otro</option>
-                </select>
-                {errors.continent && <p>{errors.role}</p>}
-            </div>
-            <div>
-                <label>Región</label>
-                <select 
-                    value={values.region} 
-                    name="region" 
                     onChange={handleChange}
+                    onBlur={handleBlur} 
                 >
-                    <option value="Latam">Latam</option>
-                    <option value="Brasil">Brasil</option>
-                    <option value="America del Norte">America del Norte</option>
-                    <option value="Otro">Otro</option> 
+                    <option value="">Seleccionar continente...</option>
+                    {data?.continente?.map(continente => (
+                        <option value={continente} key={continente}>{continente}</option>
+                    ))}
+                    {/* <option value="Europa">Europa</option>
+                    <option value="Otro">Otro</option> */}
                 </select>
-                {errors.continent && <p>{errors.role}</p>}
+                {touched.continent && errors.continent && <p>{errors.role}</p>}
             </div>
+            {values.continent === "America" && (
+                <div>
+                    <label>Región</label>
+                    <select 
+                        value={values.region} 
+                        name="region" 
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                    >
+                        <option value="">Seleccionar región...</option>
+                        {data?.region?.map(region => (
+                            <option value={region} key={region}>{region}</option>
+                        ))}
+                        {/* <option value="Brasil">Brasil</option>
+                        <option value="America del Norte">America del Norte</option>
+                        <option value="Otro">Otro</option>  */}
+                    </select>
+                    {touched.continent && errors.continent && <p>{errors.role}</p>}
+                </div>                
+            )}
+
             <input type="hidden" name="teamID" value="9cdvd108-f924-4383-947d-8f0c651d0dad" /> 
             <input type="submit"/>            
             <Link className="link" to="/login">Ir a Iniciar sesión</Link>

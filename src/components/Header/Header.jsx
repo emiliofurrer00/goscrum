@@ -21,7 +21,7 @@ function Header({tasksNumber = 0}) {
             <div className="right-section">
                 <DonateBtn>Donar</DonateBtn>
                 <h4>Tareas creadas: {tasksNumber}</h4>
-                <h4>{localStorage.getItem("username") || "Usuario"}</h4>
+                <h4>{localStorage.getItem("username") ?? "Usuario"}</h4>
                 <button onClick={handleLogout} className='logout-btn'>X</button>
             </div>
         </StyledHeader>
