@@ -1,9 +1,18 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik';
 import './Register.styles.css'
 import { Link } from 'react-router-dom';
+//import { getAuthData } from '../../../api/requests';
 
 const Register = () => {
+    const [data, setData] = useState();
+
+    useEffect(() => {
+        fetch('https://goscrum-api.alkemy.org/auth/data')
+            .then(response => response.json())
+            .then(parsedResponse => setData(parsedResponse.result));
+    }, [])
+
     const initialValues = {
         username: "",
         email: "",
@@ -22,7 +31,8 @@ const Register = () => {
     const { handleSubmit, handleChange, values, errors} = formik;
 
     return (
-        <div className="App">
+        <div className="App">                
+            <button onClick={() => console.log(data)}>Log Data</button>
             <form onSubmit={handleSubmit}>
             <h2>Registro</h2>
             <div>
@@ -56,7 +66,7 @@ const Register = () => {
                 {errors.email && <p>{errors.email}</p>}
             </div>
             <div>
-                <label for="switch" class="toggle">
+                <label htmlFor="switch" className="toggle">
                 <input type="checkbox" id="switch" className="checkbox" />
                     Perteneces a un equipo ya creado
                 </label>                

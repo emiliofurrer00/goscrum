@@ -24,9 +24,9 @@ export async function createTask({title, status, priority, description}){
     })
 }
 
-export async function fetchAllTasks(){
+export async function fetchAllTasks(onlyMine = false){
     const token = getToken();
-    const response = await fetch('https://goscrum-api.alkemy.org/task', {
+    const response = await fetch(`https://goscrum-api.alkemy.org/task${onlyMine ? "/ME" : ""}`, {
         method: 'GET',
         headers: {
         'Content-Type': 'application/json',
@@ -48,4 +48,10 @@ export async function removeTaskById(id){
     })
     const parsedResponse = await response.json();
     return parsedResponse
+}
+
+export async function getAuthData(){
+    const initialResponse = await fetch('https://goscrum-api.alkemy.org/auth/data')
+    const parsedResponse = await initialResponse.json();
+    return parsedResponse;
 }

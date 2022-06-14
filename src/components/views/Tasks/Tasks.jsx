@@ -7,37 +7,52 @@ import TaskForm from '../../TaskForm/TaskForm';
 import TaskCard from '../../TaskCard/TaskCard';
 
 import { useResize } from '../../hooks/useResize';
-
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { saveTasks } from '../../../store/tasksSlice';
+import { filterTasks, saveTasks } from '../../../store/tasksSlice';
 import { fetchAllTasks } from '../../../api/requests';
 import { motion } from 'framer-motion';
-import { categorizeTasks } from './util';
+import { categorizeTasks, debounce } from './util';
 import styled from 'styled-components';
+import { useMemo } from 'react';
 
 //Tasks VIEW component. Should modularize tasks-list into a separate component.
 const Tasks = () => {
-    //const [tasks, setTasks] = useState(null);
-    //const [username, setUsername] = useState("");
+    const [tasksOwner, setTasksOwner] = useState("");
+    const [filterWord, setFilterWord] = useState("");
+
     useEffect(() => {
-        fetchAllTasks()
+        fetchAllTasks(tasksOwner)
             .then(resultados => dispatch(saveTasks(resultados)))
             .catch(e => {
                 console.log("Se presentó el siguiente problema: ");
                 console.log(e);
             })
-    }, [])
+    }, [tasksOwner])
     
     //>>>TRYING SOME STUFF AND TESTING REDUX
     const tasks = useSelector((state) => state.tasks.allTasks)
     const dispatch = useDispatch();
     const isMobile = useResize();
 
+    // useEffect(() => {
+    //     if (filter){
+    //         dispatch(filterTasks())
+    //     }
+    // }, [filter])
 
-    useEffect(() => {
-        console.log(tasks)
-    }, [tasks]);
+    //Testing debounce
+    // function handleInputChange(e){
+    //     setFilterWord(e.target.value);
+    // }
+
+    // const handleSearch = useMemo(
+    //     () => debounce(() => {
+    //         console.log(filterWord);
+    //         dispatch(filterTasks({filterWord}));
+    //     }, 2000),
+    //     [filterWord]
+    // );
 
     if (!tasks){
         return <h2>Loading...</h2>
@@ -54,17 +69,18 @@ const Tasks = () => {
                         <div className="ownership-filter-container">
                             <div style={{display: 'flex', gap: 8}}>
                                 <label htmlFor="all-tasks-filter">
-                                    <input type="radio" id="all-tasks-filter" name="drone" value="todas" defaultChecked/>
+                                    <input type="radio" id="all-tasks-filter" name="drone" value="" onChange={(e) => setTasksOwner(e.target.value)} defaultChecked/>
                                     Todas
                                 </label>
                                 <label htmlFor="my-tasks-filter">
-                                    <input type="radio" id="my-tasks-filter" name="drone" value="propias"/>
+                                    <input type="radio" id="my-tasks-filter" name="drone" value="ME" onChange={(e) => setTasksOwner(e.target.value)}/>
                                     Mis Tareas
                                 </label>                                    
                             </div>
                             <div style={{display: 'flex', gap: 8}}>
                                 <input placeholder="Seleccionar por título..."/>
-                                <select placeholder="Seleccionar por prioridad...">
+                                <select>
+                                    <option>Seleccionar por prioridad...</option>
                                     <option>Alta</option>
                                     <option>Media</option>
                                     <option>Baja</option>
