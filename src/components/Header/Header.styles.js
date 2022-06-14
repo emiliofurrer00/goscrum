@@ -21,12 +21,13 @@ export const StyledHeader = styled.header`
         justify-content: space-evenly;
         align-items: center;
         font-size: 13px;
-        gap: 5px;
+        gap: 15px;
         & .logout-btn {
             background: none;
             border: none;
             color: var(--global-primary-color);
             margin-right: 10px;
+            cursor: pointer;
         }
     }
 `

@@ -11,7 +11,7 @@ export const Container = styled.div`
         flex-direction: row;
         justify-content: space-between;
     }
-    & .heading-title {
+    &.heading-title {
         margin-bottom: 15px;
     }
 `

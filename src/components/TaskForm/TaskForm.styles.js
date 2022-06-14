@@ -12,6 +12,18 @@ export const StyledForm = styled.form`
         height: 100px;
         resize: none;
     }
+    & > button {
+        background-color: var(--global-primary-color);
+        border-radius: var(--global-border-radius);
+        border: none;
+        color: white;
+        padding: 8px 30px;
+        font-size: 15px;
+        cursor: pointer;
+        &:hover {
+            opacity: 0.7;
+        }
+    }
 `
 export const Input = styled.input`
     ${props => props.error ? "border-color: #f47260 !important;" : ""}
@@ -24,3 +36,4 @@ export const ErrorText = styled.span`
     color: #f47260;
     font-size: 14px;
 `
+

@@ -12,7 +12,9 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveTasks } from '../../../store/tasksSlice';
 import { fetchAllTasks } from '../../../api/requests';
-import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { categorizeTasks } from './util';
+import styled from 'styled-components';
 
 //Tasks VIEW component. Should modularize tasks-list into a separate component.
 const Tasks = () => {
@@ -50,21 +52,25 @@ const Tasks = () => {
                     <h2 className="tasks-view-title heading-title">Mis tareas</h2>            
                     <div className="tasks-filter-controls">
                         <div className="ownership-filter-container">
-                            <label htmlFor="all-tasks-filter">
-                                <input type="radio" id="all-tasks-filter" name="drone" value="todas" defaultChecked/>
-                                Todas
-                            </label>
-                            <label htmlFor="my-tasks-filter">
-                                <input type="radio" id="my-tasks-filter" name="drone" value="propias"/>
-                                Mis Tareas
-                            </label>
+                            <div style={{display: 'flex', gap: 8}}>
+                                <label htmlFor="all-tasks-filter">
+                                    <input type="radio" id="all-tasks-filter" name="drone" value="todas" defaultChecked/>
+                                    Todas
+                                </label>
+                                <label htmlFor="my-tasks-filter">
+                                    <input type="radio" id="my-tasks-filter" name="drone" value="propias"/>
+                                    Mis Tareas
+                                </label>                                    
+                            </div>
+                            <div style={{display: 'flex', gap: 8}}>
+                                <input placeholder="Seleccionar por título..."/>
+                                <select placeholder="Seleccionar por prioridad...">
+                                    <option>Alta</option>
+                                    <option>Media</option>
+                                    <option>Baja</option>
+                                </select>                                
+                            </div>
                         </div>
-                        <input placeholder="Seleccionar por título..."/>
-                        <select placeholder="Seleccionar por prioridad...">
-                            <option>Alta</option>
-                            <option>Media</option>
-                            <option>Baja</option>
-                        </select>
                     </div>
                     {isMobile ? <MobileLayout tasks={tasks}/> : <DesktopLayout tasks={tasks}/>}                
                 </TasksSection>                     
@@ -75,44 +81,57 @@ const Tasks = () => {
 
 const DesktopLayout = ({tasks}) => {
     //Refactorizar de forma tal que el filtrado se ejecute una sola vez y en una misma funcion con UseEffect
+    const _tasks = categorizeTasks(tasks);
     return (
         <div style={{
             display: 'flex',
             flexDirection: 'row',
+            gap: 8
         }}>
-            <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-                padding: 8,
-                borderRadius: 8
-            }}>
+            <TaskColumn>   
                 <h4>Nuevas</h4>
-                {tasks.filter(task => task.status === 'NEW').map(task => <TaskCard data={task} key={task.createdAt}></TaskCard>)}
-            </div>
-            <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-                padding: 8,
-                borderRadius: 8
-            }}>
+                {_tasks && _tasks["NEW"].map((task, index) => <TaskCard i={index} data={task} key={task.createdAt}></TaskCard>)}
+            </TaskColumn>
+            <TaskColumn>
                 <h4>En progreso</h4>
-                {tasks.filter(task => task.status === 'IN PROGRESS').map(task => <TaskCard data={task} key={task.createdAt}></TaskCard>)}
-            </div>            
-            <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-                padding: 8,
-                borderRadius: 8
-            }}>
+                {_tasks["IN PROGRESS"].map((task, index) => <TaskCard i={index+_tasks["NEW"].length} data={task} key={task.createdAt}></TaskCard>)}
+            </TaskColumn>            
+            <TaskColumn>
                 <h4>Completadas</h4>
-                {tasks.filter(task => task.status === 'FINISHED').map(task => <TaskCard data={task} key={task.createdAt}></TaskCard>)}
-            </div>
+                {_tasks["FINISHED"].map((task, index) => <TaskCard i={index+_tasks["NEW"].length+_tasks["IN PROGRESS"].length} data={task} key={task.createdAt}></TaskCard>)}
+            </TaskColumn>
         </div>
     )
 }
+
+const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+    }
+  }
+  
+
+const TaskColumn = ({children}) => {
+    return (
+        <StyledTaskColumn variants={container} initial="hidden" animate="show">
+            {children}
+        </StyledTaskColumn>
+    )
+}
+
+const StyledTaskColumn = styled(motion.ul)`
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 4px 4px rgba(0,0,0,0.25);
+    padding: 8px;
+    border-radius: 8px;
+    flex: 1;
+    gap: 8px;
+    & > h4 {
+        margin-bottom: 8px;
+    }
+`
 
 const MobileLayout = ({tasks}) => {
     return (

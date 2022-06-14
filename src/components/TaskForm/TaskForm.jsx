@@ -37,8 +37,8 @@ function TaskForm() {
 
     return (
         <section>
-            <h2 className="heading-title">Crear tarea</h2>
-            <p style={{marginBottom: 10}}>Creá y modificá una nueva tarea</p>
+            <h2 className="heading-title" style={{marginBottom: 20}}>Crear tarea</h2>
+            <p style={{marginBottom: 20}}>Creá y modificá una nueva tarea</p>
             <StyledForm onSubmit={handleSubmit}>
                     <Input name="title" placeholder="Titulo" onChange={handleChange} error={errors.title !== undefined}/>
                     {errors.title && <ErrorText>{errors.title}</ErrorText>}

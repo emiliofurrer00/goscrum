@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
-export const TaskCard = styled.div`
+export const TaskCard = styled(motion.li)`
     width: 100%;
     @media (min-width: 900px){
         max-width: 300px;
@@ -28,11 +29,16 @@ export const TaskCard = styled.div`
         gap: 12px;
     }
     & .task-title {
-        font-size: 14px;
+        font-size: 16px;
         display: flex;
         justify-content: space-between;
     }
     & .delete-btn {
+        cursor: pointer;
+        background: none;
+        &:hover {
+            color: red;
+        }
     }
     & h2.tasks-view-title {
         font-size: 16px;
@@ -46,13 +52,13 @@ export const StatusBtn = styled.button`
             case "NEW":
                 return "#FF452B";
             case "IN PROGRESS":
-                return "#007BFF";
+                return "#FBDE3F";
             case "FINISHED":
                 return "#1EC876";
         }
     }};
     color: ${props => {
-        return props.status === "NEW" ? "white" : "black";
+        return props.status === "IN PROGRESS" ? "black" : "white";
     }};
 `
 
