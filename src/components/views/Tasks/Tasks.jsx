@@ -80,8 +80,9 @@ const Tasks = () => {
 };
 
 const DesktopLayout = ({tasks}) => {
-    //Refactorizar de forma tal que el filtrado se ejecute una sola vez y en una misma funcion con UseEffect
+    //Refactorizar de forma tal que el filtrado se ejecute una sola vez y en una misma funcion con UseEffect?
     const _tasks = categorizeTasks(tasks);
+
     return (
         <div style={{
             display: 'flex',
@@ -92,11 +93,11 @@ const DesktopLayout = ({tasks}) => {
                 <h4>Nuevas</h4>
                 {_tasks && _tasks["NEW"].map((task, index) => <TaskCard i={index} data={task} key={task.createdAt}></TaskCard>)}
             </TaskColumn>
-            <TaskColumn>
-                <h4>En progreso</h4>
+            <TaskColumn i={_tasks["NEW"].length}>
+                <motion.h4>En progreso</motion.h4>
                 {_tasks["IN PROGRESS"].map((task, index) => <TaskCard i={index+_tasks["NEW"].length} data={task} key={task.createdAt}></TaskCard>)}
             </TaskColumn>            
-            <TaskColumn>
+            <TaskColumn i={_tasks["NEW"].length + _tasks["IN PROGRESS"].length}>
                 <h4>Completadas</h4>
                 {_tasks["FINISHED"].map((task, index) => <TaskCard i={index+_tasks["NEW"].length+_tasks["IN PROGRESS"].length} data={task} key={task.createdAt}></TaskCard>)}
             </TaskColumn>
@@ -106,15 +107,19 @@ const DesktopLayout = ({tasks}) => {
 
 const container = {
     hidden: { opacity: 0 },
-    show: {
+    show: (i) => ({
       opacity: 1,
-    }
-  }
-  
+      transition: {        
+        //delay: 0.85 + (i * 0.25),
+        duration: 0.5,
+      }
+    }),
+};
 
-const TaskColumn = ({children}) => {
+
+const TaskColumn = ({children, i = 0}) => {
     return (
-        <StyledTaskColumn variants={container} initial="hidden" animate="show">
+        <StyledTaskColumn variants={container} initial="hidden" animate="show" custom={i}>
             {children}
         </StyledTaskColumn>
     )

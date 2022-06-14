@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchAllTasks } from '../api/requests';
+import { createTask, fetchAllTasks } from '../api/requests';
 
 const initialState = {
     allTasks: []
@@ -9,12 +9,6 @@ export const tasksSlice = createSlice({
     name: 'tasks',
     initialState,
     reducers: {
-        getAllTasks: async(state) => {
-            const response = await fetchAllTasks();
-            console.log(response);
-            console.log(response.result);
-            state.allTasks = response.result;
-        },
         saveTasks: (state, action) => {
             const { result } = action.payload;
             console.log(`saveTasks payload:`);
@@ -30,7 +24,14 @@ export const tasksSlice = createSlice({
     }
 });
 
-export const { getAllTasks, saveTasks, deleteTask } = tasksSlice.actions;
+export const createNewTask = (newTask) => (dispatch) => {
+    createTask(newTask)
+        .then(() => fetchAllTasks())
+        .then(newResults => dispatch(saveTasks(newResults)))
+        .catch(err => console.log(err))
+}
+
+export const { saveTasks, deleteTask } = tasksSlice.actions;
 export default tasksSlice.reducer
 
 

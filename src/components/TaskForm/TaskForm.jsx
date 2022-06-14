@@ -2,9 +2,11 @@ import React from 'react'
 import { ErrorText, Input, Select, StyledForm } from './TaskForm.styles'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { createTask } from '../../api/requests';
+import { createNewTask } from '../../store/tasksSlice';
+import { useDispatch } from 'react-redux';
 
 function TaskForm() {
+    const dispatch = useDispatch();
     const initialValues = {
         title: "",
         status: "",
@@ -13,8 +15,9 @@ function TaskForm() {
     }
 
     const onSubmit = (values) => {
-        console.log(values);
-        createTask(values);
+        //console.log(values);
+        //createTask(values);
+        dispatch(createNewTask(values));
     }
 
     const requiredError = "Campo obligatorio"

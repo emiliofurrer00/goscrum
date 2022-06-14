@@ -1,6 +1,6 @@
 import { getToken } from "./util";
 
-export function createTask({title, status, priority, description}){
+export async function createTask({title, status, priority, description}){
     const token = localStorage.getItem("token");
     fetch('https://goscrum-api.alkemy.org/task', {
         method: 'POST',
@@ -20,6 +20,7 @@ export function createTask({title, status, priority, description}){
         .then(response => response.json())
         .then(parsedJson => {
             console.log(parsedJson);
+            return parsedJson
     })
 }
 
