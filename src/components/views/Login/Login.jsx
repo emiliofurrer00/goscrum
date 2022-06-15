@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ErrorText, Input } from '../../TaskForm/TaskForm.styles';
 import { Title } from './Login.styles';
 import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
+import { saveUserData } from '../../../store/userSlice';
 
 async function handleLogin(userName, password){
     try {
@@ -26,6 +28,7 @@ async function handleLogin(userName, password){
 
 const Login = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const initialValues = {
         userName: "",
@@ -52,6 +55,8 @@ const Login = () => {
         //console.log(response)
         if (response.status_code === 200) {
             console.log(response)
+            const { user: userData } = response.result; 
+            dispatch(saveUserData(userData));
             localStorage.setItem("username", response.result.user.userName);
             localStorage.setItem("logged", "yes");
             localStorage.setItem("token", response.result.token);

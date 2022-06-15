@@ -3,6 +3,8 @@ import Login from './components/views/Login/Login';
 import Register from './components/views/Register/Register'
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import './App.css';
 
@@ -88,7 +90,8 @@ const App = () => {
           </Suspense>
           } 
         />
-      </Routes>      
+      </Routes>
+      <ToastContainer/>  
     </AnimatePresence>
   );
 }

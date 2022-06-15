@@ -7,7 +7,7 @@ it("renders a heading", () => {
     expect(screen.getByRole("heading")).toBeInTheDocument()
 })
 
-it("render a button", () => {
+it("renders a button", () => {
     render(<Donate />)
 
     expect(screen.getByRole("button")).toBeInTheDocument()

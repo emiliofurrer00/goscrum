@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { createNewTask } from '../../store/tasksSlice';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 
 function TaskForm() {
     const dispatch = useDispatch();
@@ -18,6 +19,10 @@ function TaskForm() {
         //console.log(values);
         //createTask(values);
         dispatch(createNewTask(values));
+        resetForm();
+        toast("Tu tarea se creó", {
+            position: "top-center"
+        });
     }
 
     const requiredError = "Campo obligatorio"
@@ -36,7 +41,7 @@ function TaskForm() {
         onSubmit
     });
 
-    const { handleSubmit, handleChange, errors } = formik;
+    const { handleSubmit, handleChange, errors, resetForm } = formik;
 
     return (
         <section>
@@ -60,6 +65,7 @@ function TaskForm() {
                     </Select>
                     {errors.priority && <ErrorText>{errors.priority}</ErrorText>}
                     <textarea name="description" placeholder="Descripción" onChange={handleChange}/>
+                    {errors.description && <ErrorText>{errors.description}</ErrorText>}
                     <button type="submit">Crear</button>
             </StyledForm>
         </section>
