@@ -39,6 +39,7 @@ function Header({tasksNumber = 0}) {
                     }}
                     style={{
                         cursor: 'pointer',
+                        border: 'none',
                     }}
                 >
                     TeamID 📎
