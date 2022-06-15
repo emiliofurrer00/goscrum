@@ -9,7 +9,7 @@ import TaskCard from '../../TaskCard/TaskCard';
 import { useResize } from '../../hooks/useResize';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { filterTasks, saveTasks } from '../../../store/tasksSlice';
+import { saveTasks } from '../../../store/tasksSlice';
 import { fetchAllTasks } from '../../../api/requests';
 import { motion } from 'framer-motion';
 import { categorizeTasks, debounce } from './util';
@@ -19,7 +19,6 @@ import { useMemo } from 'react';
 //Tasks VIEW component. Should modularize tasks-list into a separate component.
 const Tasks = () => {
     const [tasksOwner, setTasksOwner] = useState("");
-    const [filterWord, setFilterWord] = useState("");
 
     useEffect(() => {
         fetchAllTasks(tasksOwner)
@@ -58,6 +57,10 @@ const Tasks = () => {
         return <h2>Loading...</h2>
     }
 
+    function handleOwnershipFilterChange(e){
+        setTasksOwner(e.target.value);
+    }
+
     return (
         <>
             <Header tasksNumber={tasks?.length || 0}/>
@@ -69,11 +72,11 @@ const Tasks = () => {
                         <div className="ownership-filter-container">
                             <div style={{display: 'flex', gap: 8}}>
                                 <label htmlFor="all-tasks-filter">
-                                    <input type="radio" id="all-tasks-filter" name="drone" value="" onChange={(e) => setTasksOwner(e.target.value)} defaultChecked/>
+                                    <input type="radio" id="all-tasks-filter" name="drone" value="" onChange={handleOwnershipFilterChange} defaultChecked/>
                                     Todas
                                 </label>
                                 <label htmlFor="my-tasks-filter">
-                                    <input type="radio" id="my-tasks-filter" name="drone" value="ME" onChange={(e) => setTasksOwner(e.target.value)}/>
+                                    <input type="radio" id="my-tasks-filter" name="drone" value="ME" onChange={handleOwnershipFilterChange}/>
                                     Mis Tareas
                                 </label>                                    
                             </div>
